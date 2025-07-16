@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %} {% endblock title %}</title>
+    <style>
+    .custom-link {
+            text-decoration: none;
+        }
+        .custom-link:hover {
+            text-decoration: underline;
+        }
+</style>
+</head>
+<body>
+    <div>
+        <header class="header">
+           <a href={% url 'home' %} class ="custom-link"> <h1> Marvin's Blog </h1> </a>
+           <a href = "{% url 'create' %}"> Create + </a>
+           {% if user.is_authenticated %}
+           <p> Hi {{user.username}} </p>
+           <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">  Log Out </button>
+           </form>
+            {% else %}
+            <a href="{% url 'login' %}"><button>  Log In </button><a>
+
+            {% endif%}
+        </header>
+        <hr>
+        <div>
+    {% block content %}
+        
+    {% endblock content %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} {{post.title}} {% endblock title%}
+
+{% block content %}
+    <style>
+        .custom-link {
+            text-decoration: none;
+        }
+        .custom-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <h2>
+        <span>
+            <a href="{% url 'home' %}" class="custom-link">&larr;</a>
+        </span>
+        {{ post.title }}
+    </h2>
+    <a href = "{% url 'edit' post.pk %}" > Edit Post </a>
+    <a href = "{% url 'delete' post.pk %}" > Delete Post </a>
+
+   <p> {{post.body}} </p>
+
+{% endblock content %}

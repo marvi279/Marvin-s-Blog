@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Marvin's Blog {% endblock title%}
+
+{% block content%}
+<style>
+    .custom-link {
+            text-decoration: none;
+        }
+        .custom-link:hover {
+            text-decoration: underline;
+        }
+</style>
+    {% for post in blog %}
+    <div>
+       <a href = "{% url 'detail' post.pk %} " class="custom-link"><h2>{{post.title}}</h2></a>
+        <p>{{post.summary}}</p>
+    </div>
+    <hr>
+    {% endfor %}
+
+{% endblock content %}
