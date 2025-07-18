@@ -2,21 +2,30 @@
 
 {% block title %} Marvin's Blog {% endblock title%}
 
-{% block content%}
-<style>
-    .custom-link {
-            text-decoration: none;
-        }
-        .custom-link:hover {
-            text-decoration: underline;
-        }
-</style>
-    {% for post in blog %}
-    <div>
-       <a href = "{% url 'detail' post.pk %} " class="custom-link"><h2>{{post.title}}</h2></a>
-        <p>{{post.summary}}</p>
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h1 class="mb-4 text-center">Latest Posts</h1>
+            {% for post in blog %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <a href="{% url 'detail' post.pk %}" class="custom-link">
+                        <h2 class="card-title">{{ post.title }}</h2>
+                    </a>
+                    <p class="text-muted mb-2">
+                        by <strong>{{ post.author.username }}</strong> &middot; Published on {{ post.created_at|date:"F j, Y" }}
+                    </p>
+                    <p class="card-text">{{ post.summary }}</p>
+                    <a href="{% url 'detail' post.pk %}" class="btn btn-outline-primary btn-sm">Read More</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-info text-center">
+                No posts yet. Be the first to <a href="{% url 'create' %}">create one</a>!
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    <hr>
-    {% endfor %}
-
+</div>
 {% endblock content %}

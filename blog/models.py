@@ -7,6 +7,7 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User',on_delete=models.CASCADE)
     summary = models.CharField(max_length=400)
     body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

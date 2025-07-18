@@ -8,6 +8,7 @@ class BlogListView(ListView):
     model = Post
     template_name = 'home.html'
     context_object_name = 'blog'
+    ordering = ['-created_at'] 
 
 class BlogDetailView(DetailView):
     model = Post
@@ -17,7 +18,11 @@ class BlogDetailView(DetailView):
 class BlogCreateView(CreateView):
     model = Post
     template_name = 'create.html'
-    fields = '__all__'
+    fields = ['title', 'summary', 'body'] 
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 class BlogUpdateView(UpdateView):
     model = Post

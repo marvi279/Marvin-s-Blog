@@ -3,23 +3,29 @@
 {% block title %} {{post.title}} {% endblock title%}
 
 {% block content %}
-    <style>
-        .custom-link {
-            text-decoration: none;
-        }
-        .custom-link:hover {
-            text-decoration: underline;
-        }
-    </style>
-    <h2>
-        <span>
-            <a href="{% url 'home' %}" class="custom-link">&larr;</a>
-        </span>
-        {{ post.title }}
-    </h2>
-    <a href = "{% url 'edit' post.pk %}" > Edit Post </a>
-    <a href = "{% url 'delete' post.pk %}" > Delete Post </a>
-
-   <p> {{post.body}} </p>
-
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm me-2">&larr; Back</a>
+                        {{ post.title }}
+                    </h2>
+                    <p class="text-muted mb-1">
+                        by <strong>{{post.author.username}}</strong> &middot; Published on {{post.created_at|date:"F j, Y"}}
+                    </p>
+                    <hr>
+                    <div class="mb-4">
+                        <p>{{post.body}}</p>
+                    </div>
+                    {% if user.is_authenticated and user.username == post.author.username %}
+                        <a href="{% url 'edit' post.pk %}" class="btn btn-primary btn-sm me-2">Edit Post</a>
+                        <a href="{% url 'delete' post.pk %}" class="btn btn-danger btn-sm">Delete Post</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
